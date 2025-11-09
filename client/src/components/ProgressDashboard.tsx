@@ -32,7 +32,7 @@ export const ProgressDashboard = ({ sessions }: ProgressDashboardProps) => {
     return s.day >= weekStart && s.day <= weekEnd;
   });
 
-  // console.log('Week sessions:', weekSessions.length);
+  // console.log('Week sessions:', weekSessions.length); 
 
   const totalMinutesWeekly = weekSessions.reduce((sum, s) => sum + s.duration, 0);
   const completedMinutesWeekly = weekSessions
