@@ -1,13 +1,12 @@
-import { Moon, Sun, Plus } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { Button } from './ui/button';
-import { useTheme } from '../contexts/ThemeContext';
+import ModeToggle from './ui/ModeToggle';
 
 interface HeaderProps {
   onAddSession: () => void;
 }
 
 export const Header = ({ onAddSession }: HeaderProps) => {
-  const { theme, toggleTheme } = useTheme();
 
   return (
     <header className="bg-white/10 dark:bg-zinc-900/10 sticky top-0 z-10 backdrop-blur-lg">
@@ -30,7 +29,7 @@ export const Header = ({ onAddSession }: HeaderProps) => {
             <span className="sm:hidden">Add</span>
           </Button>
           
-          <Button
+          {/* <Button
             variant="outline"
             size="icon"
             onClick={toggleTheme}
@@ -41,7 +40,9 @@ export const Header = ({ onAddSession }: HeaderProps) => {
             ) : (
               <Sun className="h-5 w-5" />
             )}
-          </Button>
+          </Button> */}
+
+          <ModeToggle />
         </div>
       </div>
     </header>
