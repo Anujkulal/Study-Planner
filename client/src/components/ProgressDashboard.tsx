@@ -1,24 +1,25 @@
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { type StudySession } from '../types';
-import { Clock, CheckCircle2, Target, TrendingUp, CalendarClock } from 'lucide-react';
-import { Progress } from './ui/progress';
+import { Clock, CalendarClock } from 'lucide-react';
 import { formatDate, getWeekDates } from '@/lib/dateUtils';
 import { Badge } from './ui/badge';
 import { ScrollArea } from './ui/scroll-area';
+import StatsCard from './StatsCard';
+import GlassyProgressBar from './ui/GlassyProgressBar';
 
 interface ProgressDashboardProps {
   sessions: StudySession[];
 }
 
-export const ProgressDashboard = ({ sessions }: ProgressDashboardProps) => { // TODO: add chart visualization
-  const totalMinutes = sessions.reduce((sum, s) => sum + s.duration, 0);
-  const completedMinutes = sessions
-    .filter(s => s.status === 'completed')
-    .reduce((sum, s) => sum + s.duration, 0);
-  const completedCount = sessions.filter(s => s.status === 'completed').length;
-  const completionPercentage = sessions.length > 0 
-    ? Math.round((completedCount / sessions.length) * 100)
-    : 0;
+export const ProgressDashboard = ({ sessions }: ProgressDashboardProps) => {
+  // const totalMinutes = sessions.reduce((sum, s) => sum + s.duration, 0);
+  // const completedMinutes = sessions
+  //   .filter(s => s.status === 'completed')
+  //   .reduce((sum, s) => sum + s.duration, 0);
+  // const completedCount = sessions.filter(s => s.status === 'completed').length;
+  // const completionPercentage = sessions.length > 0 
+  //   ? Math.round((completedCount / sessions.length) * 100)
+  //   : 0;
 
     // console.log('ProgressDashboard sessions:', sessions);
 
@@ -50,10 +51,6 @@ export const ProgressDashboard = ({ sessions }: ProgressDashboardProps) => { // 
     .filter(s => s.status === 'pending' && s.day >= today)
     .sort((a, b) => new Date(a.day).getTime() - new Date(b.day).getTime());
 
-  const formatHours = (minutes: number) => {
-    const hours = (minutes / 60).toFixed(1);
-    return `${hours}h`;
-  };
 
   const formatDuration = (minutes: number) => {
     const hours = Math.floor(minutes / 60);
@@ -82,40 +79,41 @@ export const ProgressDashboard = ({ sessions }: ProgressDashboardProps) => { // 
     }
   };
 
-  const stats = [
-    {
-      title: 'Total Study Hours',
-      value: formatHours(totalMinutes),
-      icon: Clock,
-      color: 'text-blue-600 dark:text-blue-400',
-      bgColor: 'bg-blue-100 dark:bg-blue-950',
-    },
-    {
-      title: 'Completed Hours',
-      value: formatHours(completedMinutes),
-      icon: CheckCircle2,
-      color: 'text-green-600 dark:text-green-400',
-      bgColor: 'bg-green-100 dark:bg-green-950',
-    },
-    {
-      title: 'Sessions Completed',
-      value: `${completedCount}/${sessions.length}`,
-      icon: Target,
-      color: 'text-purple-600 dark:text-purple-400',
-      bgColor: 'bg-purple-100 dark:bg-purple-950',
-    },
-    {
-      title: 'Completion Rate',
-      value: `${completionPercentage}%`,
-      icon: TrendingUp,
-      color: 'text-orange-600 dark:text-orange-400',
-      bgColor: 'bg-orange-100 dark:bg-orange-950',
-    },
-  ];
+  // const stats = [ // remove later
+  //   {
+  //     title: 'Total Study Hours',
+  //     value: formatHours(totalMinutes),
+  //     icon: Clock,
+  //     color: 'text-blue-600 dark:text-blue-400',
+  //     bgColor: 'bg-blue-100 dark:bg-blue-950',
+  //   },
+  //   {
+  //     title: 'Completed Hours',
+  //     value: formatHours(completedMinutes),
+  //     icon: CheckCircle2,
+  //     color: 'text-green-600 dark:text-green-400',
+  //     bgColor: 'bg-green-100 dark:bg-green-950',
+  //   },
+  //   {
+  //     title: 'Sessions Completed',
+  //     value: `${completedCount}/${sessions.length}`,
+  //     icon: Target,
+  //     color: 'text-purple-600 dark:text-purple-400',
+  //     bgColor: 'bg-purple-100 dark:bg-purple-950',
+  //   },
+  //   {
+  //     title: 'Completion Rate',
+  //     value: `${completionPercentage}%`,
+  //     icon: TrendingUp,
+  //     color: 'text-orange-600 dark:text-orange-400',
+  //     bgColor: 'bg-orange-100 dark:bg-orange-950',
+  //   },
+  // ];
 
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <StatsCard sessions={sessions} />
+      {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"> // REMOVE LATER
         {stats.map((stat) => {
           const Icon = stat.icon;
           return (
@@ -134,7 +132,7 @@ export const ProgressDashboard = ({ sessions }: ProgressDashboardProps) => { // 
             </Card>
           );
         })}
-      </div>
+      </div> */}
 
       <Card>
         <CardHeader>
@@ -148,7 +146,8 @@ export const ProgressDashboard = ({ sessions }: ProgressDashboardProps) => { // 
             <span className="text-muted-foreground">Overall Completion</span>
             <span className="font-semibold">{completionPercentageWeekly}%</span>
           </div>
-          <Progress value={completionPercentageWeekly} className="h-2" />
+          {/* <Progress value={completionPercentageWeekly} className="h-4" /> */}
+          <GlassyProgressBar progress={completionPercentageWeekly} />
           <p className="text-xs text-muted-foreground">
             {completedCountWeekly} of {weekSessions.length} sessions completed this week
           </p>
