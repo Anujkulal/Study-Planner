@@ -127,13 +127,6 @@
   border-radius: 50%;
 }
 
-/* Dark mode adjustments */
-.dark .custom-calendar .completed-session {
-  background-color: hsl(142, 76%, 36%);
-  border-color: hsl(142, 76%, 36%);
-  border-radius: 50%;
-}
-
 .dark .custom-calendar .pending-session {
   background-color: hsl(221 83% 53% / 0.2);
   border-color: hsl(221 83% 53% / 0.4);
