@@ -34,10 +34,11 @@ export const ProgressDashboard = ({ sessions }: ProgressDashboardProps) => { // 
 
   // console.log('Week sessions:', weekSessions.length); 
 
-  const totalMinutesWeekly = weekSessions.reduce((sum, s) => sum + s.duration, 0);
-  const completedMinutesWeekly = weekSessions
-    .filter(s => s.status === 'completed')
-    .reduce((sum, s) => sum + s.duration, 0);
+  // const totalMinutesWeekly = weekSessions.reduce((sum, s) => sum + s.duration, 0);
+  // const completedMinutesWeekly = weekSessions
+  //   .filter(s => s.status === 'completed')
+  //   .reduce((sum, s) => sum + s.duration, 0);
+
   const completedCountWeekly = weekSessions.filter(s => s.status === 'completed').length;
   const completionPercentageWeekly = weekSessions.length > 0 
     ? Math.round((completedCountWeekly / weekSessions.length) * 100)
