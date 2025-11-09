@@ -11,4 +11,8 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  server: {
+    host: true, // Enable access from external devices
+    allowedHosts: true, // Allow all hosts
+  }
 })
