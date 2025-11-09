@@ -10,7 +10,7 @@ interface ProgressDashboardProps {
   sessions: StudySession[];
 }
 
-export const ProgressDashboard = ({ sessions }: ProgressDashboardProps) => {
+export const ProgressDashboard = ({ sessions }: ProgressDashboardProps) => { // TODO: add chart visualization
   const totalMinutes = sessions.reduce((sum, s) => sum + s.duration, 0);
   const completedMinutes = sessions
     .filter(s => s.status === 'completed')
