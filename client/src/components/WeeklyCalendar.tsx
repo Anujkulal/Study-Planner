@@ -3,7 +3,6 @@ import { DayPicker, getDefaultClassNames } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { type StudySession } from '../types';
-import { formatDate } from '../lib/dateUtils';
 import { DayDetailsModal } from './DayDetailsModal';
 import { Calendar as CalendarIcon } from 'lucide-react';
 import './styles/calendar.css';
@@ -78,26 +77,26 @@ export const WeeklyCalendar = ({
     }
   };
 
-  // Get session count for a specific date
-  const getSessionCount = (date: Date) => {
-    const dateStr = formatDate(date);
-    return sessions.filter(s => s.day === dateStr).length;
-  };
+  // // Get session count for a specific date // TODO: Use this to show count on each date
+  // const getSessionCount = (date: Date) => {
+  //   const dateStr = formatDate(date);
+  //   return sessions.filter(s => s.day === dateStr).length;
+  // };
 
-  // Custom day content to show session count
-  const renderDay = (date: Date) => {
-    const count = getSessionCount(date);
-    return (
-      <div className="relative w-full h-full flex items-center justify-center">
-        <span>{date.getDate()}</span>
-        {count > 0 && (
-          <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-[10px] rounded-full w-4 h-4 flex items-center justify-center font-semibold">
-            {count}
-          </span>
-        )}
-      </div>
-    );
-  };
+  // // Custom day content to show session count
+  // const renderDay = (date: Date) => {
+  //   const count = getSessionCount(date);
+  //   return (
+  //     <div className="relative w-full h-full flex items-center justify-center">
+  //       <span>{date.getDate()}</span>
+  //       {count > 0 && (
+  //         <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-[10px] rounded-full w-4 h-4 flex items-center justify-center font-semibold">
+  //           {count}
+  //         </span>
+  //       )}
+  //     </div>
+  //   );
+  // };
 
   if (loading) {
     return (
@@ -157,16 +156,20 @@ export const WeeklyCalendar = ({
             <h4 className="text-sm font-semibold mb-3">Legend</h4>
             <div className="flex flex-wrap gap-4 text-sm">
               <div className="flex items-center gap-2">
-                <div className="w-4 h-4 rounded-full bg-green-500"></div>
+                <div className="w-4 h-4 rounded-full bg-green-500 flex items-center justify-center text-[10px] text-primary-foreground font-bold">
+                  {sessions.filter(s => s.status === 'completed').length}
+                </div>
                 <span>Completed Sessions</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-4 h-4 rounded-full bg-blue-500"></div>
+                <div className="w-4 h-4 rounded-full bg-destructive flex items-center justify-center text-[10px] text-primary-foreground font-bold">
+                  {sessions.filter(s => s.status === 'pending').length}
+                </div>
                 <span>Pending Sessions</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-4 h-4 rounded-full bg-primary flex items-center justify-center text-[10px] text-primary-foreground font-bold">
-                  2
+                  {sessions.length}
                 </div>
                 <span>Number of sessions</span>
               </div>
