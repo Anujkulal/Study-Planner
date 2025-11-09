@@ -14,6 +14,7 @@ interface WeeklyCalendarProps {
   onEditSession: (session: StudySession) => void;
   onDeleteSession: (id: string) => void;
   loading: boolean;
+  onSessionUpdated?: () => void;
 }
 
 export const WeeklyCalendar = ({
@@ -22,6 +23,7 @@ export const WeeklyCalendar = ({
   onEditSession,
   onDeleteSession,
   loading,
+  onSessionUpdated,
 }: WeeklyCalendarProps) => {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [dayModalOpen, setDayModalOpen] = useState(false);
@@ -141,8 +143,8 @@ export const WeeklyCalendar = ({
               //   DayContent: ({ date }) => renderDay(date),
               // }}
               classNames={{
-        today: `border-amber-500`, // Add a border to today's date
-        selected: `bg-primary border-primary text-white rounded-full`, // Highlight the selected day
+        today: `text-primary`, // Add a border to today's date
+        selected: `bg-gradient-to-r from-blue-500 to-blue-800 border-primary text-white rounded-full`, // Highlight the selected day
         root: `${defaultClassNames.root}  p-5`, // Add a shadow to the root element
         chevron: `fill-primary`, // Change the color of the chevron
       }}
@@ -184,6 +186,7 @@ export const WeeklyCalendar = ({
         onAddSession={onAddSession}
         onEditSession={onEditSession}
         onDeleteSession={onDeleteSession}
+        onSessionUpdated={onSessionUpdated}
       />
     </>
   );
