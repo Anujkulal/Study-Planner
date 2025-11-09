@@ -130,7 +130,7 @@ export const SessionDialog = ({
   };
 
   return (
-    <Dialog open={open} onOpenChange={handleOpenChange}>
+    <Dialog open={open} onOpenChange={handleOpenChange} >
       <DialogContent className="sm:max-w-[500px] backdrop-blur-lg bg-zinc-100/60 dark:bg-zinc-900/10 dark:border-zinc-800">
         <DialogHeader>
           <DialogTitle>{session ? 'Edit' : 'Add'} Study Session</DialogTitle>
@@ -139,7 +139,7 @@ export const SessionDialog = ({
           </DialogDescription>
         </DialogHeader>
         
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4" >
           <div className="space-y-2">
             <Label htmlFor="subject">Subject *</Label>
             <Input
