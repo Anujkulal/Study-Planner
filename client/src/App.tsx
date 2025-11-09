@@ -56,6 +56,11 @@ const App = () => {
     }
   };
 
+   const handleSessionUpdated = async () => {
+    await loadSessions();
+    setDialogOpen(false);
+  };
+
   const handleSaveSession = async () => {
     await loadSessions();
     setDialogOpen(false);
@@ -74,6 +79,7 @@ const App = () => {
           onEditSession={handleEditSession}
           onDeleteSession={handleDeleteSession}
           loading={loading}
+          onSessionUpdated={handleSessionUpdated}
         />
       </main>
 
