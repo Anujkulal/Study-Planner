@@ -9,9 +9,7 @@ import './styles/calendar.css';
 import { maxDate, minDate } from '@/constants';
 
 interface WeeklyCalendarProps {
-  weekDates: Date[];
   sessions: StudySession[];
-  onNavigate: (direction: 'prev' | 'next') => void;
   onAddSession: (day: string) => void;
   onEditSession: (session: StudySession) => void;
   onDeleteSession: (id: string) => void;
