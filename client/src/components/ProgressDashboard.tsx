@@ -178,7 +178,7 @@ export const ProgressDashboard = ({ sessions }: ProgressDashboardProps) => {
                   {upcomingSessions.map((session) => (
                     <div
                       key={session.id}
-                      className="flex items-center justify-between p-2 rounded-md bg-muted hover:bg-muted/80 transition-colors"
+                      className="flex items-center justify-between p-2 rounded-md bg-muted hover:bg-muted/80"
                     >
                       <div className="flex-1 min-w-0">
                         <p className="font-medium text-sm truncate">{session.subject}</p>
