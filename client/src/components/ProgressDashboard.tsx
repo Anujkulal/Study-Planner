@@ -7,8 +7,46 @@ import { ScrollArea } from './ui/scroll-area';
 import StatsCard from './StatsCard';
 import GlassyProgressBar from './ui/GlassyProgressBar';
 
+import { motion } from 'framer-motion';
+import { fadeInUp, staggerContainer } from '@/lib/animations';
+import {confetti} from '@tsparticles/confetti';
+import { useEffect } from 'react';
+
+
+// Add confetti celebration function
+const celebrateCompletion = () => {
+  const duration = 3 * 1000;
+  const animationEnd = Date.now() + duration;
+  const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+  const randomInRange = (min: number, max: number) => {
+    return Math.random() * (max - min) + min;
+  };
+
+  const interval: any = setInterval(() => {
+    const timeLeft = animationEnd - Date.now();
+
+    if (timeLeft <= 0) {
+      return clearInterval(interval);
+    }
+
+    const particleCount = 50 * (timeLeft / duration);
+    
+    confetti({
+      ...defaults,
+      particleCount,
+      origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }
+    });
+    confetti({
+      ...defaults,
+      particleCount,
+      origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }
+    });
+  }, 250);
+};
+
 interface ProgressDashboardProps {
-  sessions: StudySession[];
+  sessions?: StudySession[];
 }
 
 export const ProgressDashboard = ({ sessions }: ProgressDashboardProps) => {
@@ -29,6 +67,9 @@ export const ProgressDashboard = ({ sessions }: ProgressDashboardProps) => {
   const weekEnd = formatDate(weekDates[6]);
 
   // Filter sessions for current week only
+  if(!sessions){
+    sessions = [];
+  }
   const weekSessions = sessions.filter(s => {
     return s.day >= weekStart && s.day <= weekEnd;
   });
@@ -110,8 +151,20 @@ export const ProgressDashboard = ({ sessions }: ProgressDashboardProps) => {
   //   },
   // ];
 
+  // Celebrate when completion reaches 100%
+  useEffect(() => {
+    if (completionPercentageWeekly === 100 && weekSessions.length > 0) {
+      celebrateCompletion();
+    }
+  }, [completionPercentageWeekly, weekSessions.length]);
+
   return (
-    <div className="space-y-4">
+    <motion.div 
+    className="space-y-4"
+      variants={staggerContainer}
+      initial="initial"
+      animate="animate"
+    >
       <StatsCard sessions={sessions} />
       {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"> // REMOVE LATER
         {stats.map((stat) => {
@@ -134,6 +187,11 @@ export const ProgressDashboard = ({ sessions }: ProgressDashboardProps) => {
         })}
       </div> */}
 
+        <motion.div 
+        className="grid grid-cols-1  gap-4"
+        variants={staggerContainer}
+      >
+        <motion.div >
       <Card>
         <CardHeader>
           <CardTitle className="text-base">Weekly Progress</CardTitle>
@@ -144,16 +202,34 @@ export const ProgressDashboard = ({ sessions }: ProgressDashboardProps) => {
         <CardContent className="space-y-2">
           <div className="flex items-center justify-between text-sm">
             <span className="text-muted-foreground">Overall Completion</span>
-            <span className="font-semibold">{completionPercentageWeekly}%</span>
+            {/* <span className="font-semibold">{completionPercentageWeekly}%</span> */}
+            <motion.span 
+                  className="font-semibold"
+                  key={completionPercentageWeekly}
+                  initial={{ scale: 1.5, color: '#22c55e' }}
+                  animate={{ scale: 1, color: 'inherit' }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {completionPercentageWeekly}%
+                </motion.span>
           </div>
           {/* <Progress value={completionPercentageWeekly} className="h-4" /> */}
+          {/* <motion.div
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                style={{ transformOrigin: "left" }}
+              > */}
           <GlassyProgressBar progress={completionPercentageWeekly} />
+          {/* </motion.div> */}
           <p className="text-xs text-muted-foreground">
             {completedCountWeekly} of {weekSessions.length} sessions completed this week
           </p>
         </CardContent>
       </Card>
+      </motion.div>
 
+        <motion.div >
       <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
@@ -161,25 +237,45 @@ export const ProgressDashboard = ({ sessions }: ProgressDashboardProps) => {
                 <CalendarClock className="h-4 w-4" />
                 Upcoming Sessions
               </CardTitle>
-              <Badge variant="secondary" className="text-xs">
-                {upcomingSessions.length}
-              </Badge>
+              <motion.div
+                  key={upcomingSessions.length}
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                >
+                  <Badge variant="secondary" className="text-xs">
+                    {upcomingSessions.length}
+                  </Badge>
+                </motion.div>
             </div>
           </CardHeader>
           <CardContent>
             {upcomingSessions.length === 0 ? (
-              <div className="text-center py-6 text-muted-foreground text-sm">
-                <CalendarClock className="h-8 w-8 mx-auto mb-2 opacity-50" />
-                <p>No upcoming sessions this week</p>
-              </div>
+              <motion.div 
+                  className="text-center py-6 text-muted-foreground text-sm"
+                  variants={fadeInUp}
+                >
+                  <CalendarClock className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                  <p>No upcoming sessions this week</p>
+                </motion.div>
             ) : (
               <ScrollArea className="h-[120px]">
-                <div className="space-y-2">
+                <motion.div 
+                    className="space-y-2"
+                    variants={staggerContainer}
+                    initial="initial"
+                    animate="animate"
+                  >
                   {upcomingSessions.map((session) => (
-                    <div
-                      key={session.id}
-                      className="flex items-center justify-between p-2 rounded-md bg-muted hover:bg-muted/80"
-                    >
+                    <motion.div
+                        key={session.id}
+                        variants={fadeInUp}
+                        whileHover={{ 
+                          x: 5,
+                          transition: { duration: 0.2 }
+                        }}
+                        className="flex items-center justify-between p-2 rounded-md bg-muted hover:bg-muted/80 transition-colors"
+                      >
                       <div className="flex-1 min-w-0">
                         <p className="font-medium text-sm truncate">{session.subject}</p>
                         <p className="text-xs text-muted-foreground">
@@ -192,13 +288,15 @@ export const ProgressDashboard = ({ sessions }: ProgressDashboardProps) => {
                           <span>{formatDuration(session.duration)}</span>
                         </div>
                       </div>
-                    </div>
+                    </motion.div>
                   ))}
-                </div>
+                </motion.div>
               </ScrollArea>
             )}
           </CardContent>
         </Card>
-    </div>
+    </motion.div>
+    </motion.div>
+    </motion.div>
   );
 };
