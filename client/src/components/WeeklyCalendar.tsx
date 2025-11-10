@@ -9,7 +9,7 @@ import './styles/calendar.css';
 import { maxDate, minDate } from '@/constants';
 
 interface WeeklyCalendarProps {
-  sessions: StudySession[];
+  sessions?: StudySession[];
   onAddSession: (day: string) => void;
   onEditSession: (session: StudySession) => void;
   onDeleteSession: (id: string) => void;
@@ -31,6 +31,9 @@ export const WeeklyCalendar = ({
 
   const defaultClassNames = getDefaultClassNames();
 
+  if (!sessions) {
+    sessions = [];
+  }
 
   // Get all dates that have sessions
   const sessionDates = sessions.map(s => new Date(s.day));
