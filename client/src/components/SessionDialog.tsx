@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { type StudySession } from '../types';
-import { sessionsAPI } from '../api/sessions';
+// import { sessionsAPI } from '../api/sessions';
 import { formatDate } from '../lib/dateUtils';
 import {
   Dialog,
@@ -23,6 +23,9 @@ import {
 } from './ui/select';
 import { toast } from 'sonner';
 import { maxDate, minDate } from '@/constants';
+import {useDispatch, useSelector} from "react-redux";
+import type { AppDispatch, RootState } from '@/redux/store';
+import { addSession, updateSession } from '@/redux/slices/sessionSlice';
 
 interface SessionDialogProps {
   open: boolean;
@@ -45,7 +48,7 @@ export const SessionDialog = ({
   defaultDay,
   onSave,
 }: SessionDialogProps) => {
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     subject: '',
     duration: '60',
@@ -53,6 +56,9 @@ export const SessionDialog = ({
     day: defaultDay || formatDate(new Date()),
     status: 'pending' as 'completed' | 'pending',
   });
+
+  const dispatch = useDispatch<AppDispatch>();
+  const {loading, success } = useSelector((state: RootState) => state.session);
 
   useEffect(() => {
     // console.log('SessionDialog session changed:', session);
@@ -83,34 +89,54 @@ export const SessionDialog = ({
       return;
     }
 
-    setLoading(true);
+    // setLoading(true);
     try {
       if (session) {
-        await sessionsAPI.updateSession(session.id, {
-          subject: formData.subject,
-          duration,
-          notes: formData.notes,
-          day: formData.day,
-          status: formData.status,
-        });
-        toast.success('Session updated successfully');
+        // await sessionsAPI.updateSession(session.id, {
+        //   subject: formData.subject,
+        //   duration,
+        //   notes: formData.notes,
+        //   day: formData.day,
+        //   status: formData.status,
+        // });
+        dispatch(updateSession({
+          id: session.id,
+          updates: {
+            subject: formData.subject,
+            duration,
+            notes: formData.notes,
+            day: formData.day,
+            status: formData.status,
+          }
+        })).unwrap();
+        // clearSessionState();
+        // toast.success(success);
       } else {
-        await sessionsAPI.createSession({
+        // await sessionsAPI.createSession({
+        //   subject: formData.subject,
+        //   duration,
+        //   notes: formData.notes,
+        //   day: formData.day,
+        //   status: formData.status,
+        // });
+        dispatch(addSession({
           subject: formData.subject,
           duration,
           notes: formData.notes,
           day: formData.day,
           status: formData.status,
-        });
-        toast.success('Session created successfully');
+        })).unwrap();
+        // clearSessionState();
+        console.log("added::: ", success)
+        // toast.success(success);
       }
       onSave();
       resetForm();
     } catch (error) {
-        toast.error('Failed to save session');
+        // toast.error('Failed to save session');
         console.error('Failed to save session:', error);
     } finally {
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
