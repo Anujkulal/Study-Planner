@@ -68,7 +68,7 @@ const StatsCard = ({ sessions }: StatsCardProps) => {
 
 
   return (
-    <div className="bg-gray-100 dark:bg-card rounded-3xl p-5 flex justify-between items-center w-full max-w-2xl mx-auto shadow-lg">
+    <div className="bg-gray-100 dark:bg-card rounded-3xl p-5 flex justify-between items-center w-full max-w-6xl mx-auto shadow-lg">
       {stats.map((stat) => {
         const color =
           stat.result > 60
