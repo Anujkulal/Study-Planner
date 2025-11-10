@@ -1,5 +1,7 @@
 import { Check, ClockIcon, Target, TrendingUp } from "lucide-react";
 import type { StudySession } from "@/types";
+import { motion } from 'framer-motion';
+import { bounceIn } from '@/lib/animations';
 
 interface StatsRingProps {
   percentage: number;
@@ -82,12 +84,12 @@ const StatsCard = ({ sessions }: StatsCardProps) => {
             key={stat.id}
             className="flex flex-col items-center justify-center gap-2 w-1/4"
           >
-            <div className="relative">
+            <motion.div className="relative" variants={bounceIn}>
               <StatsRing percentage={stat.result} color={color} />
               <div className="absolute inset-0 flex items-center justify-center dark:text-white text-gray-900">
                 {stat.icon}
               </div>
-            </div>
+            </motion.div>
 
             <p className="dark:text-white text-gray-900 text-lg font-semibold mt-1">
               {stat.value}
