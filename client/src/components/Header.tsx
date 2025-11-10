@@ -1,4 +1,4 @@
-import { Plus, PlusCircle } from 'lucide-react';
+import { PlusCircle } from 'lucide-react';
 import { Button } from './ui/button';
 import ModeToggle from './ui/ModeToggle';
 
