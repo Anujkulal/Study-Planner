@@ -172,3 +172,18 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Keep default cursor on mobile/touch devices */
+@media (pointer: coarse) {
+  * {
+    cursor: auto !important;
+  }
+  
+  /* Hide custom cursor components on mobile */
+  [class*="CustomCursor"],
+  [class*="MagneticCursor"],
+  [class*="ParticleTrail"],
+  [class*="BlobCursor"] {
+    display: none !important;
+  }
+}
