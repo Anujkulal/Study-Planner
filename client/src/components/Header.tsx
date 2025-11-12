@@ -1,6 +1,9 @@
 import { PlusCircle } from 'lucide-react';
 import { Button } from './ui/button';
 import ModeToggle from './ui/ModeToggle';
+import { SplitText } from 'gsap/all';
+import gsap from 'gsap';
+import { useEffect, useRef } from 'react';
 
 interface HeaderProps {
   onAddSession: () => void;
@@ -8,13 +11,48 @@ interface HeaderProps {
 
 export const Header = ({ onAddSession }: HeaderProps) => {
 
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  useEffect(() => {
+    const heading = headingRef.current;
+    if (!heading) return;
+
+    // Register SplitText plugin
+    gsap.registerPlugin(SplitText);
+
+    // Split text into characters
+    const split = new SplitText(heading, { 
+      type: 'chars',
+      charsClass: 'char'
+    });
+
+    // Animate characters
+    const animation = gsap.to(split.chars, {
+      x: 10,
+      ease: 'power2.inOut',
+      yoyo: true, // continuous back-and-forth
+      stagger: { // stagger: each character's animation
+        each: 0.08,
+        from: 'start'
+      },
+      repeat: -1,
+      duration: 0.7,
+    });
+
+    // Cleanup function
+    return () => {
+      animation.kill();
+      split.revert();
+    };
+  }, []);
+
+
   return (
     <header className="bg-white/10 dark:bg-zinc-900/10 sticky top-0 z-10 backdrop-blur-lg">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <div className='flex gap-2 justify-center items-center'>
         <img src="/logo.png" alt="Logo" className="h-10 md:h-15 rounded-2xl" />
         <div>
-          <h1 className="text-xl md:text-2xl font-bold">Study Planner</h1>
+          <h1 className="text-xl md:text-2xl font-bold" ref={headingRef}>Study Planner</h1>
           <p className="text-sm text-muted-foreground hidden sm:block">
             Track your study sessions and progress
           </p>
