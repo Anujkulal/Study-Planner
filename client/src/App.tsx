@@ -8,6 +8,13 @@ import { Header } from "./components/Header";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "./redux/store";
 import { clearMessages, deleteSession, getAllSessions } from "./redux/slices/sessionSlice";
+import { AIInsights } from "./components/AIInsights";
+import { AIScheduleGenerator } from "./components/AIScheduleGenerator";
+import { AIStudyAssistant } from "./components/AIStudyAssistant";
+import { motion } from "framer-motion";
+import { Button } from "./components/ui/button";
+import { Bot } from "lucide-react";
+import { CustomCursor } from "./components/cursor/CustomCursor";
 
 const App = () => {
   // const [sessions, setSessions] = useState<StudySession[]>([]);
@@ -15,6 +22,8 @@ const App = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingSession, setEditingSession] = useState<StudySession | null>(null);
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
+  const [showAIPanel, setShowAIPanel] = useState(false);
+
 
   const dispatch = useDispatch<AppDispatch>();
   const { loading, sessions } = useSelector((state: RootState) => state.session);
@@ -90,12 +99,17 @@ const App = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <CustomCursor />
+
       <Header onAddSession={() => handleAddSession()} />
       
       <main className="container mx-auto px-4 py-6 space-y-6">
         <ProgressDashboard sessions={sessions} />
-        
-        <WeeklyCalendar
+
+        {/* AI Features Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <div className="lg:col-span-2">
+            <WeeklyCalendar
           sessions={sessions}
           onAddSession={handleAddSession}
           onEditSession={handleEditSession}
@@ -103,6 +117,29 @@ const App = () => {
           loading={loading}
           onSessionUpdated={handleSessionUpdated}
         />
+          </div>
+          <div className="space-y-4">
+            <AIInsights />
+            <AIScheduleGenerator />
+          </div>
+        </div>
+
+        {/* AI Chat Assistant - Floating */}
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: showAIPanel ? 1 : 0 }}
+          className="fixed bottom-12 right-4 w-96 z-50"
+        >
+          <AIStudyAssistant showAIPanel={showAIPanel} setShowAIPanel={setShowAIPanel}  />
+        </motion.div>
+        
+        <Button
+          onClick={() => setShowAIPanel(!showAIPanel)}
+          className="fixed bottom-4 right-4 rounded-full w-14 h-14 shadow-lg"
+        >
+          <Bot className="h-6 w-6" />
+        </Button>
+        
       </main>
 
       <SessionDialog
@@ -114,6 +151,9 @@ const App = () => {
       />
 
       <Toaster richColors position="top-center" />
+      
+      {/* <ParticleTrailCursor /> */}
+      {/* <BlobCursor /> */}
     </div>
   );
 };
