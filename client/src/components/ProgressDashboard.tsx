@@ -127,37 +127,6 @@ export const ProgressDashboard = ({ sessions }: ProgressDashboardProps) => {
     }
   };
 
-  // const stats = [ // remove later
-  //   {
-  //     title: 'Total Study Hours',
-  //     value: formatHours(totalMinutes),
-  //     icon: Clock,
-  //     color: 'text-blue-600 dark:text-blue-400',
-  //     bgColor: 'bg-blue-100 dark:bg-blue-950',
-  //   },
-  //   {
-  //     title: 'Completed Hours',
-  //     value: formatHours(completedMinutes),
-  //     icon: CheckCircle2,
-  //     color: 'text-green-600 dark:text-green-400',
-  //     bgColor: 'bg-green-100 dark:bg-green-950',
-  //   },
-  //   {
-  //     title: 'Sessions Completed',
-  //     value: `${completedCount}/${sessions.length}`,
-  //     icon: Target,
-  //     color: 'text-purple-600 dark:text-purple-400',
-  //     bgColor: 'bg-purple-100 dark:bg-purple-950',
-  //   },
-  //   {
-  //     title: 'Completion Rate',
-  //     value: `${completionPercentage}%`,
-  //     icon: TrendingUp,
-  //     color: 'text-orange-600 dark:text-orange-400',
-  //     bgColor: 'bg-orange-100 dark:bg-orange-950',
-  //   },
-  // ];
-
   // Celebrate when completion reaches 100%
   useEffect(() => {
     if (completionPercentageWeekly === 100 && weekSessions.length > 0) {
