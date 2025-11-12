@@ -102,7 +102,8 @@ export const AIScheduleGenerator = () => {
 
           <Button 
             onClick={generateSchedule} 
-            disabled={loading}
+            // disabled={loading}
+            disabled
             className="w-full"
           >
             {loading ? (
