@@ -150,7 +150,10 @@ export const AIStudyAssistant = ({setShowAIPanel}: AIStudyAssistantProps) => {
             placeholder="Ask me anything about studying..."
             disabled={loading}
           />
-          <Button onClick={sendMessage} disabled={loading || !input.trim()}>
+          <Button onClick={sendMessage} 
+          // disabled={loading || !input.trim()}
+          disabled
+          >
             <Send className="h-4 w-4" />
           </Button>
         </div>
