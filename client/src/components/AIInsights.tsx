@@ -51,13 +51,13 @@ export const AIInsights = () => {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Brain className="h-5 w-5 text-purple-600" />
+            <Brain className="h-5 w-5 text-primary" />
             AI Learning Insights
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-center py-8">
-            <Loader2 className="h-8 w-8 animate-spin text-purple-600" />
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
           </div>
         </CardContent>
       </Card>
@@ -69,7 +69,7 @@ export const AIInsights = () => {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Brain className="h-5 w-5 text-purple-600" />
+            <Brain className="h-5 w-5 text-primary" />
             AI Learning Insights
           </CardTitle>
         </CardHeader>
@@ -80,7 +80,7 @@ export const AIInsights = () => {
           <div className="mt-4">
             <div className="w-full bg-muted rounded-full h-2">
               <div 
-                className="bg-purple-600 h-2 rounded-full transition-all"
+                className="bg-primary h-2 rounded-full transition-all"
                 style={{ width: `${(sessions.length / 5) * 100}%` }}
               />
             </div>
@@ -102,7 +102,7 @@ export const AIInsights = () => {
       <Card className='h-full'>
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle className="flex items-center gap-2">
-            <Brain className="h-5 w-5 text-purple-600" />
+            <Brain className="h-5 w-5 text-primary" />
             AI Learning Insights
           </CardTitle>
           <Button 
@@ -126,7 +126,7 @@ export const AIInsights = () => {
         {loading && !insights ? (
           <CardContent>
             <div className="flex items-center justify-center py-8">
-              <Loader2 className="h-8 w-8 animate-spin text-purple-600" />
+              <Loader2 className="h-8 w-8 animate-spin text-primary" />
             </div>
           </CardContent>
         ) : insights && (
