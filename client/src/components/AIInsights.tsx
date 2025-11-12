@@ -75,7 +75,7 @@ export const AIInsights = () => {
         </CardHeader>
         <CardContent>
           <p className="text-sm text-muted-foreground">
-            Complete at least 5 study sessions to unlock AI-powered insights about your learning patterns.
+            Add at least 5 study sessions to unlock AI-powered insights about your learning patterns.
           </p>
           <div className="mt-4">
             <div className="w-full bg-muted rounded-full h-2">
@@ -85,7 +85,7 @@ export const AIInsights = () => {
               />
             </div>
             <p className="text-xs text-muted-foreground mt-2 text-center">
-              {sessions.length} / 5 sessions completed
+              {sessions.length} / 5 sessions added
             </p>
           </div>
         </CardContent>
