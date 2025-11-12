@@ -82,7 +82,7 @@ export const AIStudyAssistant = ({setShowAIPanel}: AIStudyAssistantProps) => {
 
   return (
     <ScrollArea className='h-[400px] '>
-    <Card className=" flex flex-col backdrop-blur-lg bg-zinc-100/60 dark:bg-purple-900/10 border dark:border-zinc-00">
+    <Card className=" flex flex-col backdrop-blur-lg bg-zinc-100/60 dark:bg-blue-900/10 border dark:border-zinc-00">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Bot className="h-5 w-5 text-blue-600" />
