@@ -15,7 +15,7 @@ interface LearningInsights {
   recommendations: string[];
   productivity_score: number;
   consistency_score: number;
-  focus_areas: string[];
+  focus_areas: string[]; 
 }
 
 export const AIInsights = () => {
