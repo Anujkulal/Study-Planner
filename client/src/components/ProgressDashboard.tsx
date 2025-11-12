@@ -3,7 +3,6 @@ import { type StudySession } from '../types';
 import { Clock, CalendarClock } from 'lucide-react';
 import { formatDate, getWeekDates } from '@/lib/dateUtils';
 import { Badge } from './ui/badge';
-import { ScrollArea } from './ui/scroll-area';
 import StatsCard from './StatsCard';
 import GlassyProgressBar from './ui/GlassyProgressBar';
 
@@ -11,6 +10,14 @@ import { motion } from 'framer-motion';
 import { fadeInUp, staggerContainer } from '@/lib/animations';
 import {confetti} from '@tsparticles/confetti';
 import { useEffect } from 'react';
+
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
 
 
 // Add confetti celebration function
@@ -230,7 +237,7 @@ export const ProgressDashboard = ({ sessions }: ProgressDashboardProps) => {
       </motion.div>
 
         <motion.div >
-      <Card>
+      <Card className='h-[280px]'>
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle className="text-base flex items-center gap-2">
@@ -259,39 +266,74 @@ export const ProgressDashboard = ({ sessions }: ProgressDashboardProps) => {
                   <p>No upcoming sessions this week</p>
                 </motion.div>
             ) : (
-              <ScrollArea className="h-[120px]">
-                <motion.div 
-                    className="space-y-2"
-                    variants={staggerContainer}
-                    initial="initial"
-                    animate="animate"
-                  >
-                  {upcomingSessions.map((session) => (
-                    <motion.div
-                        key={session.id}
-                        variants={fadeInUp}
-                        whileHover={{ 
-                          x: 5,
-                          transition: { duration: 0.2 }
-                        }}
-                        className="flex items-center justify-between p-2 rounded-md bg-muted hover:bg-muted/80 transition-colors"
-                      >
-                      <div className="flex-1 min-w-0">
-                        <p className="font-medium text-sm truncate">{session.subject}</p>
-                        <p className="text-xs text-muted-foreground">
-                          {formatSessionDate(session.day)}
-                        </p>
-                      </div>
-                      <div className="flex items-center gap-2 ml-2">
-                        <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                          <Clock className="h-3 w-3" />
-                          <span>{formatDuration(session.duration)}</span>
-                        </div>
-                      </div>
-                    </motion.div>
-                  ))}
-                </motion.div>
-              </ScrollArea>
+              // <ScrollArea className="h-[120px]">
+              //   <motion.div 
+              //       className="space-y-2"
+              //       variants={staggerContainer}
+              //       initial="initial"
+              //       animate="animate"
+              //     >
+              //     {upcomingSessions.map((session) => (
+              //       <motion.div
+              //           key={session.id}
+              //           variants={fadeInUp}
+              //           whileHover={{ 
+              //             x: 5,
+              //             transition: { duration: 0.2 }
+              //           }}
+              //           className="flex items-center justify-between p-2 rounded-md bg-muted hover:bg-muted/80 transition-colors"
+              //         >
+              //         <div className="flex-1 min-w-0">
+              //           <p className="font-medium text-sm truncate">{session.subject}</p>
+              //           <p className="text-xs text-muted-foreground">
+              //             {formatSessionDate(session.day)}
+              //           </p>
+              //         </div>
+              //         <div className="flex items-center gap-2 ml-2">
+              //           <div className="flex items-center gap-1 text-xs text-muted-foreground">
+              //             <Clock className="h-3 w-3" />
+              //             <span>{formatDuration(session.duration)}</span>
+              //           </div>
+              //         </div>
+              //       </motion.div>
+              //     ))}
+              //   </motion.div>
+              // </ScrollArea>
+              <Carousel
+      opts={{
+        align: "start",
+      }}
+      orientation="vertical"
+      className="w-full mt-3"
+    >
+      <CarouselContent className="-mt-1 h-[140px] w-full">
+        {upcomingSessions.map((session) => (
+          <CarouselItem key={session.id} className="pt-1 basis-1/3">
+            <div className="flex items-center justify-between p-2 rounded-md bg-muted hover:bg-muted/80 transition-colors">
+              {/* <Card>
+                <CardContent className="flex items-center justify-center p-6">
+                  <span className="text-3xl font-semibold">{session.id + 1}</span>
+                </CardContent>
+              </Card> */}
+              <div className="flex-1 min-w-0">
+                <p className="font-medium text-sm truncate">{session.subject}</p>
+                <p className="text-xs text-muted-foreground">
+                  {formatSessionDate(session.day)}
+                </p>
+              </div>
+              <div className="flex items-center gap-2 ml-2">
+                <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                  <Clock className="h-3 w-3" />
+                  <span>{formatDuration(session.duration)}</span>
+                </div>
+              </div>
+            </div>
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+      <CarouselPrevious />
+      <CarouselNext />
+    </Carousel>
             )}
           </CardContent>
         </Card>
