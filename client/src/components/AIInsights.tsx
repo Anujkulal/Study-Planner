@@ -107,7 +107,8 @@ export const AIInsights = () => {
           </CardTitle>
           <Button 
             onClick={analyzePatterns} 
-            disabled={loading}
+            // disabled={loading}
+            disabled
             size="sm"
             variant="outline"
           >
