@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
@@ -7,7 +7,7 @@ import { Brain, TrendingUp, Target, Lightbulb, Loader2 } from 'lucide-react';
 import { aiService } from '@/services/aiService';
 import { useSelector } from 'react-redux';
 import type { RootState } from '@/redux/store';
-import { fadeInUp, staggerContainer } from '@/lib/animations';
+import {  staggerContainer } from '@/lib/animations';
 
 interface LearningInsights {
   strengths: string[];
