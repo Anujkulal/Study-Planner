@@ -13,8 +13,9 @@ import { AIScheduleGenerator } from "./components/AIScheduleGenerator";
 import { AIStudyAssistant } from "./components/AIStudyAssistant";
 import { motion } from "framer-motion";
 import { Button } from "./components/ui/button";
-import { Bot } from "lucide-react";
+import { Bot, Home } from "lucide-react";
 import { CustomCursor } from "./components/cursor/CustomCursor";
+import { useNavigate } from "react-router-dom";
 
 const App = () => {
   // const [sessions, setSessions] = useState<StudySession[]>([]);
@@ -24,7 +25,7 @@ const App = () => {
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
   const [showAIPanel, setShowAIPanel] = useState(false);
 
-
+  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { loading, sessions } = useSelector((state: RootState) => state.session);
 
@@ -102,6 +103,15 @@ const App = () => {
       <CustomCursor />
 
       <Header onAddSession={() => handleAddSession()} />
+
+        <Button
+        variant="outline"
+        size="icon"
+        onClick={() => navigate('/')}
+        className="fixed top-20 left-4 z-50 rounded-full shadow-lg"
+      >
+        <Home className="h-4 w-4" />
+      </Button>
       
       <main className="container mx-auto px-4 py-6 space-y-6">
         <ProgressDashboard sessions={sessions} />
