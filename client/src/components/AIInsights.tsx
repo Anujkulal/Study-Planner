@@ -133,7 +133,7 @@ export const AIInsights = () => {
           <CardContent className="space-y-6">
             {/* Scores */}
             <div className="grid grid-cols-2 gap-4">
-              <div className="text-center p-4 bg-green-50 dark:bg-green-950 rounded-lg">
+              <div className="text-center p-4 bg-green-50 dark:bg-green-800/40 rounded-lg">
                 <div className="text-3xl font-bold dark:text-green-400 text-gray-300">
                   {insights.productivity_score}
                 </div>
@@ -141,7 +141,7 @@ export const AIInsights = () => {
                   Productivity Score
                 </div>
               </div>
-              <div className="text-center p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
+              <div className="text-center p-4 bg-blue-50 dark:bg-blue-800/40 rounded-lg">
                 <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">
                   {insights.consistency_score}
                 </div>
